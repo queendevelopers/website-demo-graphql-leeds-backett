@@ -1,0 +1,91 @@
+type Subscription{
+    count : Int!
+}
+
+type Mutation{
+    LoginUser(data: LoginUserInput) : AuthPayload!
+    createUser(data : CreateUserInput): AuthPayload!
+    deleteUser : User!
+    createPost(data : CreatePostInput) : Post!
+    deletePost(id: ID!, data: updateUserInput) : Post!
+    createComment(data: CreateCommentInput) : Comment!
+    deleteComment(id : ID!) : Comment!
+    updateUser(data:updateUserInput) : User!
+    updatePost(id:ID!,data:updatePostInput) : Post!
+    updateComment(id:ID!,data:updateCommentInput) : Comment!
+}
+
+type AuthPayload{
+    token:String!
+    user: User!
+
+}
+
+input LoginUserInput{
+    email:String!
+    password:String!
+}
+
+input updatePostInput{
+    title:String
+    body:String
+    published:Boolean
+}
+input updateCommentInput{
+    text:String
+}
+
+
+input updateUserInput{
+    name:String
+    email:String
+    password:String
+}
+input CreateUserInput{
+    name: String!,
+    email:String!,
+    password:String!,
+}
+input CreatePostInput{
+    title:String!,
+    body:String!,
+    published: Boolean!
+}
+input CreateCommentInput{
+    text:String!,author:String!,post:String!
+}
+
+
+type Query{
+    Users(query:String):[User!]!
+    Posts(query:String): [Post!]!
+    Comments: [Comment!]!
+    post: Post!
+    Post: [Post!]!
+    me: User!
+}
+
+type Post{
+    id:ID!
+    title:String!
+    body:String!
+    published:Boolean!
+    author: User!
+    comments:[Comment!]!
+}
+
+type User{
+    id:ID!
+    name:String!
+    email:String!
+    password:String!
+    age:Int
+    posts:[Post!]!
+    comments:[Comment!]!
+}
+type Comment{
+    id:ID!
+    text:String!
+    author:User!
+    post:Post!
+}
